@@ -1,5 +1,5 @@
-create database Db_Lobo1	-- cria um banco de dados
-use Db_Lobo1				-- seleciona banco de dados para uso
+create database Db_Lobo1	 -- create database [nome] 
+use Db_Lobo1				          -- seleciona banco de dados para uso
 
 -- criação das tabelas
 
