@@ -44,5 +44,5 @@ ON p.id_ped = g.fk_pedido_id_ped
 inner join nota n
 ON n.id_not = g.fk_nota_id_not
 
-WHERE p.data_ped = '20210902'
+WHERE p.data_ped = '20210902' -- condição
 and p.valor_ped = 119
