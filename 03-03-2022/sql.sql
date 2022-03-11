@@ -36,30 +36,40 @@ números multiplicados por 3 e multiplicados por 5 e no final mostrar a soma de 
 
 DECLARE @Conta AS INT
 DECLARE @ContadorMult3 AS INT
+DECLARE @Quantidade3 AS INT
 DECLARE @ContadorMult5 AS INT
+DECLARE @Quantidade5 AS INT
 DECLARE @SomaCont AS INT
 
 SET @SomaCont = 0
 SET @Conta = 1
 SET @ContadorMult3 = 0
 SET @ContadorMult5 = 0
+SET @Quantidade3 = 0
+SET @Quantidade5 = 0
 
 WHILE @Conta <= 1000
 BEGIN
 	IF @Conta % 3 = 0
 	BEGIN
-		SET @ContadorMult3 += 1
+		SET @Quantidade3 += 1
+		SET @ContadorMult3 += @Conta
 	END
-	ELSE IF @Conta % 5 = 0
+	IF @Conta % 5 = 0
 	BEGIN
-		SET @ContadorMult5 += 1
+		SET @Quantidade5 += 1
+		SET @ContadorMult5 += @Conta
 	END
 SET @Conta += 1
 END
 
 SET @SomaCont = @ContadorMult3 + @ContadorMult5
 
-SELECT @ContadorMult3 AS 'Mult 3', @ContadorMult5 AS 'Mult 5', @SomaCont AS 'Soma'
+SELECT 'Soma Múltiplos de 3 => ' + convert(char(10), @ContadorMult3) AS 'Soma Mult 3'
+SELECT 'Quantidade Múltiplos de 3 => ' + convert(char(10), @Quantidade3) AS 'Quantidade Mult 3'
+SELECT 'Soma Múltiplos de 5 => ' + convert(char(10), @ContadorMult5) AS 'Soma Mult 5'
+SELECT 'Quantidade Múltiplos de 5 => ' + convert(char(10), @Quantidade5) AS 'Quantidade Mult 5'
+SELECT 'Soma dos dois => ' + convert(char(10), @SomaCont) AS 'Soma Geral'
 
 
 
@@ -92,14 +102,14 @@ De 18 até 60 igual a Adulto
 Acima de 61 Idoso 
 
 DECLARE @Idade AS INT
-SET @Idade = DATEDIFF(YEAR, '20030411', GETDATE())
+SET @Idade = DAY(GETDATE()) + MONTH(GETDATE()) + CONVERT(INT, SUBSTRING(CONVERT(CHAR(4), YEAR(GETDATE())),3,2))
 
 SELECT @Idade,
 CASE
 	WHEN @Idade <= 10 THEN 'CRIANÇA'
 	WHEN @Idade > 10 AND @Idade <= 17 THEN 'JOVEM'
 	WHEN @Idade > 17 AND @Idade <= 60 THEN 'ADULTO'
-	WHEN @Idade > 60 THEN 'IDODO'
+	ELSE 'IDODO'
 END as 'Resultado' 
 
 
@@ -125,9 +135,13 @@ finalize o programa;
 DECLARE @LACO AS INT
 SET @LACO = 0
 
-WHILE @LACO <= 8
+WHILE @LACO <= 10
 BEGIN
-	SELECT @LACO AS 'NUMERO'
+	IF @LACO = 8
+		BEGIN 
+		SELECT @LACO AS 'NUMERO'
+		BREAK
+		END
 	SET @LACO += 1
 END
 
@@ -137,7 +151,7 @@ END
 DECLARE @Media AS FLOAT
 DECLARE @Resultado AS CHAR(50)
 
-SET @Media = 7
+SET @Media = (2 + 6)
 
 IF @Media >= 6
 BEGIN
@@ -157,28 +171,31 @@ impares.
 DECLARE @Numero AS INT
 DECLARE @ContaPar AS INT
 DECLARE @ContaImpar AS INT
-DECLARE @ContaParesImpares AS INT
+DECLARE @QuantidadePares AS INT
+DECLARE @QuantidadeImpares AS INT
 
 SET @Numero = 1
 SET @ContaImpar = 0
 SET @ContaPar = 0
-SET @ContaParesImpares = 0;
+SET @QuantidadePares = 0
+SET @QuantidadeImpares = 0
 
 WHILE @Numero <= 100
 BEGIN
 IF @Numero % 2 = 0
 BEGIN
-	SET @ContaPar += 1
+	SET @ContaPar += @Numero
+	SET @QuantidadePares += 1
 END
 ELSE
 BEGIN
-	SET @ContaImpar += 1
+	SET @ContaImpar += @Numero
+	SET @QuantidadeImpares += 1
 END
 SET @Numero += 1
 END
 
-SET @ContaParesImpares = @ContaPar + @ContaImpar
-SELECT @ContaPar AS 'Pares', @ContaImpar AS 'Impares', @ContaParesImpares AS 'Soma'
+SELECT @ContaPar AS 'Pares', @ContaImpar AS 'Impares', @QuantidadePares AS 'Soma Pares', @QuantidadeImpares AS 'Quantidade Impares'
 
 
 9) Crie um script em PL/SQL usando CASE que mostre um laço de repetição de 1 até 5000 e
